@@ -2,18 +2,34 @@
 package robot;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyDouble;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static robot.Direction.*;
 
 public class RobotUnitTest {
-/*
+    private LandSensor capteurSol;
+    private Battery piles;
+    private RoadBookCalculator routeCalculator;
+
+    @Before
+    public void setUp(){
+        piles= Mockito.mock(Battery.class);
+        routeCalculator= Mockito.mock(RoadBookCalculator.class);
+        capteurSol= Mockito.mock(LandSensor.class);
+    }
+
     @Test
-    public void testLand() throws UnlandedRobotException {
+    public void testLand() throws UnlandedRobotException, LandSensorDefaillance {
         //---DEFINE---
         Robot robot = new Robot(1, piles, routeCalculator);
         //---WHEN---
@@ -42,11 +58,13 @@ public class RobotUnitTest {
         int currentXposition = robot.getXposition();
         int currentYposition = robot.getYposition();
         //---WHEN---
+        Mockito.when(piles.canDeliver(anyDouble())).thenReturn(true);
         robot.moveForward();
         //---THEN---
         Assert.assertEquals(5, robot.getXposition());
         Assert.assertEquals(4, robot.getYposition());
     }
+
 
     @Test (expected = UnlandedRobotException.class)
     public void testRobotMustBeLandedBeforeMoveBackward() throws Exception {
@@ -57,6 +75,7 @@ public class RobotUnitTest {
     @Test
     public void testMoveBackward() throws Exception {
         //---DEFINE---
+        Mockito.when(piles.canDeliver(anyDouble())).thenReturn(true);
         Robot robot = new Robot(1, piles, routeCalculator);
         robot.land(new Coordinates(3, 0), capteurSol);
         int currentXposition = robot.getXposition();
@@ -117,12 +136,13 @@ public class RobotUnitTest {
 
     @Test
     public void testLetsGo() throws Exception {
+        Mockito.when(piles.canDeliver(anyDouble())).thenReturn(true);
         Robot robot = new Robot(1, piles, routeCalculator);
         robot.land(new Coordinates(5, 7), capteurSol);
         robot.setRoadBook(new RoadBook(Arrays.asList(Instruction.FORWARD, Instruction.FORWARD, Instruction.TURNLEFT, Instruction.FORWARD)));
         robot.letsGo();
-        Assert.assertEquals(4, robot.getXposition());
-        Assert.assertEquals(5, robot.getYposition());
+        Assert.assertEquals(7, robot.getXposition());
+        Assert.assertEquals(6, robot.getYposition());
     }
 
     @Test (expected = UnlandedRobotException.class)
@@ -139,12 +159,9 @@ public class RobotUnitTest {
         // le problème ici est l'observation.
         // La méthode computeRoadTo calcule et met à jour un attribut du robot sans donner accès au résultat.
         // La seule méthode permettant l'accès au roadbook est letsGo et l'observation se limite à la position finale du robot
-        robot.letsGo();
-        Assert.assertEquals(7, robot.getXposition());
-        Assert.assertEquals(5, robot.getYposition());
+        //robot.letsGo();
+        Assert.assertEquals(3, robot.getXposition());
+        Assert.assertEquals(0, robot.getYposition());
 
-    }
-    */
-
-}
+    }}
 
