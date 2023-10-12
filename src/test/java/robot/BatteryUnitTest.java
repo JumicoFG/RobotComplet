@@ -12,18 +12,18 @@ public class BatteryUnitTest {
         //---DEFINE---
         Battery battery = new Battery();
         //---WHEN-THEN--
-        Assert.assertEquals(100, battery.getChargeLevel(), 0);
+        Assert.assertEquals(20, battery.getChargeLevel(), 0);
     }
 
     @Test
     public void testCharge() {
         //---DEFINE---
         Battery cell = new Battery();
-        Assert.assertEquals(100, cell.getChargeLevel(),0);
+        Assert.assertEquals(20, cell.getChargeLevel(),0);
         //---WHEN---
         cell.charge();
         //---THEN---
-        Assert.assertEquals(110, cell.getChargeLevel(), 0);
+        Assert.assertEquals(30, cell.getChargeLevel(), 0);
     }
 
     // tester l'apparition d'une exception, l'annotation @Test intègre expected
@@ -43,9 +43,9 @@ public class BatteryUnitTest {
         //---DEFINE---
         Battery cell = new Battery();
         //---WHEN---
-        cell.use(25f);
+        cell.use(10f);
         //---THEN---
-        Assert.assertEquals(75f, cell.getChargeLevel(),0);
+        Assert.assertEquals(10, cell.getChargeLevel(),0);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class BatteryUnitTest {
         //---DEFINE---
         Battery battery = new Battery();
         //---WHEN-THEN--
-        Assert.assertTrue(battery.canDeliver(75));
+        Assert.assertTrue(battery.canDeliver(10));
     }
 
     @Test
